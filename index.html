@@ -3,11 +3,99 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="scss/all.css" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Todo List App</title>
   </head>
   <body>
-    內容 測試git
+    <div class="container">
+      <h1>TODO LIST</h1>
+      <div>
+        <h4>註冊</h4>
+        <form id="registrationForm">
+          <label for="name">名稱：</label>
+          <input type="text" id="registrationName" name="name" required />
+
+          <label for="email">信箱：</label>
+          <input type="email" id="registrationEmail" name="email" required />
+
+          <label for="password">密碼：</label>
+          <input
+            type="password"
+            id="registrationPassword"
+            name="password"
+            required
+          />
+
+          <button id="registrationBtn" type="submit">送出註冊</button>
+        </form>
+      </div>
+      <div>
+        <h4>簡易登入</h4>
+        <div>
+          <h4>登入</h4>
+          <form id="loginForm">
+            <label for="email">信箱：</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="password">密碼：</label>
+            <input type="password" id="password" name="password" required />
+
+            <button type="submit">登入</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="card input">
+        <input type="text" placeholder="請輸入待辦事項" />
+        <a href="#" class="btn_add">+</a>
+      </div>
+      <div class="card card_list">
+        <ul class="tab">
+          <li class="active">全部</li>
+          <li>待完成</li>
+          <li>已完成</li>
+        </ul>
+        <div class="cart_content">
+          <ul class="list">
+            <li>
+              <label class="checkbox" for="">
+                <input type="checkbox" />
+                <span>把冰箱發霉的檸檬拿去丟</span>
+              </label>
+              <a href="#" class="delete"></a>
+            </li>
+            <li>
+              <label class="checkbox" for="">
+                <input type="checkbox" />
+                <span>把冰箱發霉的檸檬拿去丟</span>
+              </label>
+              <a href="#" class="delete"></a>
+            </li>
+            <li>
+              <label class="checkbox" for="">
+                <input type="checkbox" />
+                <span>把冰箱發霉的檸檬拿去丟</span>
+              </label>
+              <a href="#" class="delete"></a>
+            </li>
+            <li>
+              <label class="checkbox" for="">
+                <input type="checkbox" />
+                <span>把冰箱發霉的檸檬拿去丟</span>
+              </label>
+              <a href="#" class="delete"></a>
+            </li>
+          </ul>
+          <div class="list_footer">
+            <p>5 個待完成項目</p>
+            <a href="#">清除已完成項目</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="all.js"></script>
   </body>
 </html>
