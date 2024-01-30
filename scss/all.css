@@ -15,7 +15,14 @@ body {
   background: #eee;
   display: flex;
   color: #333;
-  background-image: linear-gradient(174deg, #ffd370 2%, #ffd370 46%, #ffffff 46%, #ffffff 100%, #e8e8e8 100%);
+  background-image: linear-gradient(
+    174deg,
+    #ffd370 2%,
+    #ffd370 46%,
+    #ffffff 46%,
+    #ffffff 100%,
+    #e8e8e8 100%
+  );
   letter-spacing: 0.07em;
 }
 
@@ -96,6 +103,50 @@ h4 {
   background-color: #e13c0e;
 }
 
+.registrationArea .btn-group {
+  width: 70%;
+  display: flex;
+  justify-content: space-between; /* 让按钮之间保持均匀的间距 */
+  margin-top: 15px;
+}
+
+.registrationArea .btn-group button {
+  width: 46%;
+  background-color: #d55836;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.registrationArea .btn-group button:hover {
+  background-color: #e13c0e;
+}
+
+.loginArea .btn-group {
+  width: 70%;
+  display: flex;
+  justify-content: space-between; /* 让按钮之间保持均匀的间距 */
+  margin-top: 15px;
+}
+
+.loginArea .btn-group button {
+  width: 46%;
+  background-color: #d55836;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.loginArea .btn-group button:hover {
+  background-color: #e13c0e;
+}
+
 .card {
   margin-bottom: 0.5rem;
   max-width: 100%;
@@ -105,24 +156,27 @@ h4 {
   box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.15);
 }
 
-input[type=text] {
-  width: 100%;
-  border: 0;
-  outline: 0;
+input {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 1rem;
-  padding-right: 1rem;
-  color: #333;
-}
-input[type=text]::-moz-placeholder {
-  color: #9f9a91;
-}
-input[type=text]::placeholder {
-  color: #9f9a91;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.input {
-  padding: 4px 4px 4px 1rem;
+.input-group {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.label {
+  font-size: 1rem;
+  margin-bottom: 8px;
 }
 
 .btn_add {
@@ -141,6 +195,10 @@ input[type=text]::placeholder {
 
 .none {
   display: none;
+}
+
+.cardArea .card.input {
+  display: flex;
 }
 
 .card_list {
@@ -233,8 +291,8 @@ input[type=text]::placeholder {
 .checkbox {
   position: relative;
   -webkit-user-select: none;
-     -moz-user-select: none;
-          user-select: none;
+  -moz-user-select: none;
+  user-select: none;
   width: 100%;
   display: block;
   padding-left: 44px;
@@ -300,4 +358,4 @@ input[type=text]::placeholder {
 }
 .checkbox input:checked ~ span::after {
   opacity: 1;
-}/*# sourceMappingURL=all.css.map */
+} /*# sourceMappingURL=all.css.map */

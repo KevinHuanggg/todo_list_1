@@ -1,24 +1,60 @@
 const registrationForm = document.querySelector("#registrationForm");
-const loginForm = document.querySelector("#loginForm");
+const registrationArea = document.querySelector(".registrationArea");
+const loginArea = document.querySelector(".loginArea");
+const cardArea = document.querySelector(".cardArea");
+const loginButton = document.querySelector(".loginBtn");
+const registerBtn = document.querySelector(".registerBtn");
+const passRegisterBtn = document.querySelector(".passRegisterBtn");
+const backSignBtn = document.querySelector(".backSignBtn");
+const list = document.querySelector(".list");
 
 const apiURL = `https://todoo.5xcamp.us`;
 let token = "";
-//Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTA4Iiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzA2MTA3MDM5LCJleHAiOjE3MDc0MDMwMzksImp0aSI6IjExZTAzZDdmLTc5NzAtNDJkZS04YjBjLWYxMjEyOGQxOWVhMiJ9.sxzv1zE7oVFEQduFesaKn-IwggOrOSOqwXIHT81c60U
+let data = [];
 
-registrationForm.addEventListener("submit", function (e) {
+let state = "login";
+
+passRegisterBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  let name = document.querySelector("#registrationName").value;
-  let email = document.querySelector("#registrationEmail").value;
-  let password = document.querySelector("#registrationPassword").value;
-  signUp(email, name, password);
+  let userName = document.querySelector("#registrationName").value;
+  let userEmail = document.querySelector("#registrationEmail").value;
+  let userPassword = document.querySelector("#registrationPassword").value;
+  signUp(userEmail, userName, userPassword);
 });
 
-loginForm.addEventListener("submit", function (e) {
+backSignBtn.addEventListener("click", function (e) {
   e.preventDefault();
-  let email = document.querySelector("#email").value;
-  let password = document.querySelector("#password").value;
-  login(email, password);
+  stateChange("login");
 });
+
+loginButton.addEventListener("click", function (e) {
+  e.preventDefault();
+  let userEmail = document.querySelector("#email").value;
+  let userPassword = document.querySelector("#password").value;
+  login(userEmail, userPassword);
+});
+
+registerBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+  stateChange("sign");
+});
+
+function stateChange(state) {
+  if (state === "sign") {
+    registrationArea.classList.remove("none");
+    loginArea.classList.add("none");
+    cardArea.classList.add("none");
+  } else if (state === "login") {
+    // Add conditions for other states if needed
+    registrationArea.classList.add("none");
+    loginArea.classList.remove("none");
+    cardArea.classList.add("none");
+  } else if (state === "card") {
+    registrationArea.classList.add("none");
+    loginArea.classList.add("none");
+    cardArea.classList.remove("none");
+  }
+}
 
 function signUp(email, nickname, password) {
   axios
@@ -39,6 +75,10 @@ function signUp(email, nickname, password) {
         });
       };
       showAlert();
+      document.querySelector("#registrationName").value = "";
+      document.querySelector("#registrationEmail").value = "";
+      document.querySelector("#registrationPassword").value = "";
+      stateChange("login");
     })
     .catch((error) => {
       let errorMessage = error.response.data.message;
@@ -65,16 +105,39 @@ function login(email, password) {
     .then((res) => {
       axios.defaults.headers.common["Authorization"] =
         res.headers.authorization;
-      console.log(res);
-      console.log(res.data);
+      let nickName = res.data.nickname;
+      const showAlert = () => {
+        Swal.fire({
+          icon: "success",
+          title: "登入成功",
+          text: `歡迎回來${nickName}`,
+        });
+      };
+      showAlert();
+      document.querySelector("#email").value = "";
+      document.querySelector("#password").value = "";
+      getTodos();
+      stateChange("card");
     })
-    .catch((error) => console.log(error.response));
+    .catch((error) => {
+      const showAlert = () => {
+        Swal.fire({
+          icon: "error",
+          title: "登入失敗",
+          text: "請重新輸入",
+        });
+      };
+      showAlert();
+    });
 }
 
 function getTodos() {
   axios
     .get(`${apiURL}/todos`)
-    .then((res) => console.log(res))
+    .then((res) => {
+      data = res.data.todos;
+      renderTodos(data);
+    })
     .catch((error) => console.log(error.response));
 }
 
@@ -112,4 +175,20 @@ function toggleTodo(todoId) {
     .patch(`${apiURL}/todos/${todoId}/toggle`)
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
+}
+
+function renderTodos(todos) {
+  let content = ``;
+  todos.forEach(function (todo, index) {
+    content += `
+    <li>
+      <label class="checkbox" for="" id=${todo.id}>
+        <input type="checkbox" />
+        <span>${todo.content}</span>
+      </label>
+      <a href="#" class="delete"></a>
+    </li>
+    `;
+  });
+  list.innerHTML = content;
 }
