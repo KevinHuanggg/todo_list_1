@@ -7,10 +7,11 @@ const registerBtn = document.querySelector(".registerBtn");
 const passRegisterBtn = document.querySelector(".passRegisterBtn");
 const backSignBtn = document.querySelector(".backSignBtn");
 const list = document.querySelector(".list");
+const btn_add = document.querySelector(".btn_add");
 
 const apiURL = `https://todoo.5xcamp.us`;
 let token = "";
-let data = [];
+let data;
 
 let state = "login";
 
@@ -37,6 +38,12 @@ loginButton.addEventListener("click", function (e) {
 registerBtn.addEventListener("click", function (e) {
   e.preventDefault();
   stateChange("sign");
+});
+
+btn_add.addEventListener("click", function (e) {
+  e.preventDefault();
+  let todoInput = document.querySelector(".todoInput").value;
+  addTodo(todoInput);
 });
 
 function stateChange(state) {
@@ -94,62 +101,64 @@ function signUp(email, nickname, password) {
     });
 }
 
-function login(email, password) {
-  axios
-    .post(`${apiURL}/users/sign_in`, {
+async function login(email, password) {
+  try {
+    const res = await axios.post(`${apiURL}/users/sign_in`, {
       user: {
         email: email,
         password: password,
       },
-    })
-    .then((res) => {
-      axios.defaults.headers.common["Authorization"] =
-        res.headers.authorization;
-      let nickName = res.data.nickname;
-      const showAlert = () => {
-        Swal.fire({
-          icon: "success",
-          title: "登入成功",
-          text: `歡迎回來${nickName}`,
-        });
-      };
-      showAlert();
-      document.querySelector("#email").value = "";
-      document.querySelector("#password").value = "";
-      getTodos();
-      stateChange("card");
-    })
-    .catch((error) => {
-      const showAlert = () => {
-        Swal.fire({
-          icon: "error",
-          title: "登入失敗",
-          text: "請重新輸入",
-        });
-      };
-      showAlert();
     });
+    axios.defaults.headers.common["Authorization"] = res.headers.authorization;
+    const showAlert = () => {
+      Swal.fire({
+        icon: "success",
+        title: "登入成功",
+        text: `歡迎回來${res.data.nickname}`,
+      });
+    };
+    showAlert();
+    document.querySelector("#email").value = "";
+    document.querySelector("#password").value = "";
+    data = await getTodos();
+    renderTodos(data);
+    stateChange("card");
+  } catch (error) {
+    console.log(error);
+    const showAlert = () => {
+      Swal.fire({
+        icon: "error",
+        title: "登入失敗",
+        text: "請重新輸入",
+      });
+    };
+    showAlert();
+  }
 }
 
-function getTodos() {
-  axios
-    .get(`${apiURL}/todos`)
-    .then((res) => {
-      data = res.data.todos;
-      renderTodos(data);
-    })
-    .catch((error) => console.log(error.response));
+async function getTodos() {
+  try {
+    const response = await axios.get(`${apiURL}/todos`);
+    return response.data.todos;
+  } catch (error) {
+    console.log(error.response);
+    throw error;
+  }
 }
 
-function addTodo(todo) {
-  axios
-    .post(`${apiURL}/todos`, {
+async function addTodo(todo) {
+  try {
+    const res = await axios.post(`${apiURL}/todos`, {
       todo: {
         content: todo,
       },
-    })
-    .then((res) => console.log(res))
-    .catch((error) => console.log(error.response));
+    });
+    data = await getTodos();
+    renderTodos(data);
+  } catch (error) {
+    console.log(error.response);
+    throw error;
+  }
 }
 
 function updateTodo(todo, todoId) {
@@ -179,7 +188,7 @@ function toggleTodo(todoId) {
 
 function renderTodos(todos) {
   let content = ``;
-  todos.forEach(function (todo, index) {
+  todos.forEach(function (todo) {
     content += `
     <li>
       <label class="checkbox" for="" id=${todo.id}>

@@ -98,6 +98,28 @@ h4 {
   }
 }
 
+.registrationArea .btn-group {
+  width: 70%;
+  display: flex;
+  justify-content: space-between; /* 让按钮之间保持均匀的间距 */
+  margin-top: 15px;
+}
+
+.registrationArea .btn-group button {
+  width: 46%;
+  background-color: #d55836;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.registrationArea .btn-group button:hover {
+  background-color: #e13c0e;
+}
+
 .loginArea .btn-group {
   width: 70%;
   display: flex;
