@@ -52,9 +52,11 @@ btn_add.addEventListener("click", function (e) {
 
 list_container.addEventListener("click", function (e) {
   e.preventDefault();
-  console.log(e.target);
-  list_container;
-  //let newHTML = `<input> `
+  let todoId = e.target.id
+  console.log(e.target)
+  let newHTML = `<input type="text" id=${todoId}> `
+  list_container.innerHTML = newHTML
+  
 
   // 獲取被點擊的元素
   const clickedElement = e.target;
