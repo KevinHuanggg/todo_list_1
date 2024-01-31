@@ -48,6 +48,16 @@ btn_add.addEventListener("click", function (e) {
   todoInput.value = "";
 });
 
+//編輯功能
+
+list.addEventListener("click", function (e) {
+  e.preventDefault();
+  console.log(e.target);
+
+  // 獲取被點擊的元素
+  const clickedElement = e.target;
+});
+
 function stateChange(state) {
   if (state === "sign") {
     registrationArea.classList.remove("none");
@@ -193,10 +203,10 @@ function renderTodos(todos) {
   let unCompletedNum = 0;
   todos.forEach(function (todo) {
     content += `
-    <li>
-      <label class="checkbox" for="" id=${todo.id}>
-        <input type="checkbox" />
-        <span>${todo.content}</span>
+    <li class="list">
+      <label class="checkbox" for="${todo.id}">
+        <input type="checkbox" id="${todo.id}" />
+        <span class="todoContent">${todo.content}</span>
       </label>
       <a href="#" class="delete"></a>
     </li>
@@ -209,3 +219,6 @@ function renderTodos(todos) {
   list.innerHTML = content;
   unCompleted.textContent = `${unCompletedNum} 個待完成項目`;
 }
+
+// {id: 'a450eaf7e05cfe877f9b8040fea339c0', content: '加一', completed_at: null}
+//"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2MTUyIiwic2NwIjoidXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNzA2NzE1NTM2LCJleHAiOjE3MDgwMTE1MzYsImp0aSI6ImNhYjQ0ZmZhLTg3MzktNGY5Ni1iYTcxLWMxOGVjMDY3NThhMSJ9.66cEzBKz3oJwnLM1KInsO3lbds9acB9gH-s6tL4bW3k";
