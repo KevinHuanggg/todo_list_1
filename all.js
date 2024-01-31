@@ -8,6 +8,7 @@ const passRegisterBtn = document.querySelector(".passRegisterBtn");
 const backSignBtn = document.querySelector(".backSignBtn");
 const list = document.querySelector(".list");
 const btn_add = document.querySelector(".btn_add");
+const unCompleted = document.querySelector(".unCompleted");
 
 const apiURL = `https://todoo.5xcamp.us`;
 let token = "";
@@ -42,8 +43,9 @@ registerBtn.addEventListener("click", function (e) {
 
 btn_add.addEventListener("click", function (e) {
   e.preventDefault();
-  let todoInput = document.querySelector(".todoInput").value;
-  addTodo(todoInput);
+  let todoInput = document.querySelector(".todoInput");
+  addTodo(todoInput.value);
+  todoInput.value = "";
 });
 
 function stateChange(state) {
@@ -188,6 +190,7 @@ function toggleTodo(todoId) {
 
 function renderTodos(todos) {
   let content = ``;
+  let unCompletedNum = 0;
   todos.forEach(function (todo) {
     content += `
     <li>
@@ -198,6 +201,11 @@ function renderTodos(todos) {
       <a href="#" class="delete"></a>
     </li>
     `;
+
+    if (todo.completed_at === null) {
+      unCompletedNum += 1;
+    }
   });
   list.innerHTML = content;
+  unCompleted.textContent = `${unCompletedNum} 個待完成項目`;
 }
