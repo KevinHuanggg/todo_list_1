@@ -6,7 +6,7 @@ const loginButton = document.querySelector(".loginBtn");
 const registerBtn = document.querySelector(".registerBtn");
 const passRegisterBtn = document.querySelector(".passRegisterBtn");
 const backSignBtn = document.querySelector(".backSignBtn");
-const list = document.querySelector(".list");
+const list_container = document.querySelector(".list_container");
 const btn_add = document.querySelector(".btn_add");
 const unCompleted = document.querySelector(".unCompleted");
 
@@ -50,9 +50,11 @@ btn_add.addEventListener("click", function (e) {
 
 //編輯功能
 
-list.addEventListener("click", function (e) {
+list_container.addEventListener("click", function (e) {
   e.preventDefault();
   console.log(e.target);
+  list_container;
+  //let newHTML = `<input> `
 
   // 獲取被點擊的元素
   const clickedElement = e.target;
@@ -216,7 +218,7 @@ function renderTodos(todos) {
       unCompletedNum += 1;
     }
   });
-  list.innerHTML = content;
+  list_container.innerHTML = content;
   unCompleted.textContent = `${unCompletedNum} 個待完成項目`;
 }
 
