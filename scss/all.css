@@ -225,19 +225,19 @@ input {
   }
 }
 
-.list {
+.list_container {
   list-style: none;
 }
-.list li {
+.list_container li {
   position: relative;
   padding-right: 2rem;
 }
 @media (max-width: 575px) {
-  .list li {
+  .list_container li {
     padding-right: 0;
   }
 }
-.list li a.delete {
+.list_container li a.delete {
   position: absolute;
   opacity: 0;
   right: 0;
@@ -253,13 +253,13 @@ input {
   background-size: contain;
 }
 @media (max-width: 575px) {
-  .list li a.delete {
+  .list_container li a.delete {
     opacity: 1;
     width: 12px;
     height: 12px;
   }
 }
-.list li:hover a.delete {
+.list_container li:hover a.delete {
   opacity: 1;
   transition: opacity 0.3s ease;
 }

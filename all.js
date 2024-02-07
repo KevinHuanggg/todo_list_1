@@ -7,6 +7,7 @@ const registerBtn = document.querySelector(".registerBtn");
 const passRegisterBtn = document.querySelector(".passRegisterBtn");
 const backSignBtn = document.querySelector(".backSignBtn");
 const list_container = document.querySelector(".list_container");
+const list = document.querySelector(".list");
 const btn_add = document.querySelector(".btn_add");
 const unCompleted = document.querySelector(".unCompleted");
 
@@ -50,16 +51,8 @@ btn_add.addEventListener("click", function (e) {
 
 //編輯功能
 
-list_container.addEventListener("click", function (e) {
-  e.preventDefault();
-  let todoId = e.target.id
-  console.log(e.target)
-  let newHTML = `<input type="text" id=${todoId}> `
-  list_container.innerHTML = newHTML
-  
-
-  // 獲取被點擊的元素
-  const clickedElement = e.target;
+list.addEventListener("click", function (e) {
+  console.log(e.target);
 });
 
 function stateChange(state) {
@@ -207,7 +200,7 @@ function renderTodos(todos) {
   let unCompletedNum = 0;
   todos.forEach(function (todo) {
     content += `
-    <li class="list">
+    <li class="list" data-id="${todo.id}">
       <label class="checkbox" for="${todo.id}">
         <input type="checkbox" id="${todo.id}" />
         <span class="todoContent">${todo.content}</span>
