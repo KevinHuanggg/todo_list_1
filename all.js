@@ -9,6 +9,7 @@ const backSignBtn = document.querySelector(".backSignBtn");
 const list_container = document.querySelector(".list_container");
 const btn_add = document.querySelector(".btn_add");
 const unCompleted = document.querySelector(".unCompleted");
+const clearAllCompleted = document.getElementById("clearAllCompleted");
 
 const apiURL = `https://todoo.5xcamp.us`;
 let token = "";
@@ -59,6 +60,16 @@ list_container.addEventListener("click", async function (e) {
     await deleteTodo(id);
   } else {
     await toggleTodo(id);
+  }
+});
+
+//清除全部已完成的監聽
+clearAllCompleted.addEventListener("click", async function (e) {
+  e.preventDefault();
+  for (const todo of data) {
+    if (todo.completed_at !== null) {
+      await deleteTodo(todo.id);
+    }
   }
 });
 
