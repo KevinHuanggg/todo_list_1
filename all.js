@@ -7,7 +7,6 @@ const registerBtn = document.querySelector(".registerBtn");
 const passRegisterBtn = document.querySelector(".passRegisterBtn");
 const backSignBtn = document.querySelector(".backSignBtn");
 const list_container = document.querySelector(".list_container");
-const list = document.querySelector(".list");
 const btn_add = document.querySelector(".btn_add");
 const unCompleted = document.querySelector(".unCompleted");
 
@@ -49,10 +48,19 @@ btn_add.addEventListener("click", function (e) {
   todoInput.value = "";
 });
 
-//編輯功能
+//切換done toggle
 
-list.addEventListener("click", function (e) {
-  console.log(e.target);
+//編輯 以及 刪除 功能
+
+list_container.addEventListener("click", async function (e) {
+  e.preventDefault();
+  const closestLi = e.target.closest("li");
+  if (e.target.tagName.toLowerCase() === "a") {
+    let deleteId = closestLi.dataset.id;
+    await deleteTodo(deleteId);
+  } else {
+    console.log(e.target);
+  }
 });
 
 function stateChange(state) {
@@ -184,14 +192,20 @@ function updateTodo(todo, todoId) {
 function deleteTodo(todoId) {
   axios
     .delete(`${apiURL}/todos/${todoId}`)
-    .then((res) => console.log(res))
+    .then(async (res) => {
+      data = await getTodos();
+      renderTodos(data);
+    })
     .catch((err) => console.log(err));
 }
 
 function toggleTodo(todoId) {
   axios
     .patch(`${apiURL}/todos/${todoId}/toggle`)
-    .then((res) => console.log(res))
+    .then(async (res) => {
+      data = await getTodos();
+      renderTodos(data);
+    })
     .catch((err) => console.log(err));
 }
 
@@ -202,7 +216,9 @@ function renderTodos(todos) {
     content += `
     <li class="list" data-id="${todo.id}">
       <label class="checkbox" for="${todo.id}">
-        <input type="checkbox" id="${todo.id}" />
+        <input type="checkbox" id="${todo.id}" ${
+      todo.completed_at ? "checked" : ""
+    }>
         <span class="todoContent">${todo.content}</span>
       </label>
       <a href="#" class="delete"></a>
