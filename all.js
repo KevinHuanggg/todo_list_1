@@ -68,7 +68,7 @@ clearAllCompleted.addEventListener("click", async function (e) {
   e.preventDefault();
   for (const todo of data) {
     if (todo.completed_at !== null) {
-      await deleteTodo(todo.id);
+      await deleteTodo(todo.id)
     }
   }
 });
