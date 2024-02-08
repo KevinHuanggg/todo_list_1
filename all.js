@@ -49,17 +49,16 @@ btn_add.addEventListener("click", function (e) {
 });
 
 //切換done toggle
-
 //編輯 以及 刪除 功能
 
 list_container.addEventListener("click", async function (e) {
-  e.preventDefault();
   const closestLi = e.target.closest("li");
+  let id = closestLi.dataset.id;
   if (e.target.tagName.toLowerCase() === "a") {
-    let deleteId = closestLi.dataset.id;
-    await deleteTodo(deleteId);
+    e.preventDefault();
+    await deleteTodo(id);
   } else {
-    console.log(e.target);
+    await toggleTodo(id);
   }
 });
 
@@ -215,10 +214,8 @@ function renderTodos(todos) {
   todos.forEach(function (todo) {
     content += `
     <li class="list" data-id="${todo.id}">
-      <label class="checkbox" for="${todo.id}">
-        <input type="checkbox" id="${todo.id}" ${
-      todo.completed_at ? "checked" : ""
-    }>
+      <label class="checkbox" for="">
+        <input type="checkbox" ${todo.completed_at ? "checked" : ""}>
         <span class="todoContent">${todo.content}</span>
       </label>
       <a href="#" class="delete"></a>
